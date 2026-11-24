@@ -1,5 +1,7 @@
 """Persist a strategy only when it strictly improves a separate validation set."""
 import sqlite3
+import json
+import hashlib
 from contextlib import closing
 from .strategy import train, evaluate
 
@@ -26,4 +28,13 @@ def promote(db, training, validation):
             accepted = after > before
             if accepted:
                 conn.execute("INSERT OR REPLACE INTO strategy_state VALUES (1,?)",(candidate,))
-            return {"candidate":candidate,"active":candidate if accepted else current,"promoted":accepted,"before":before,"after":after,"total":len(validation)}
+            result = {"candidate":candidate,"active":candidate if accepted else current,"promoted":accepted,"before":before,"after":after,"total":len(validation)}
+            result["dataset_sha256"] = hashlib.sha256(json.dumps([training,validation],ensure_ascii=False).encode("utf-8")).hexdigest()
+            conn.execute("CREATE TABLE IF NOT EXISTS promotion_audit (seq INTEGER PRIMARY KEY, result TEXT NOT NULL)")
+            conn.execute("INSERT INTO promotion_audit(result) VALUES (?)",(json.dumps(result),))
+            return result
+
+def audit(db):
+    with closing(sqlite3.connect(db)) as conn, conn:
+        conn.execute("CREATE TABLE IF NOT EXISTS promotion_audit (seq INTEGER PRIMARY KEY, result TEXT NOT NULL)")
+        return [json.loads(row[0]) for row in conn.execute("SELECT result FROM promotion_audit ORDER BY seq")]
