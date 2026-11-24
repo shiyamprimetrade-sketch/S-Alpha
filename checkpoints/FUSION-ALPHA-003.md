@@ -1,0 +1,2 @@
+# FUSION-ALPHA-003
+Prior website CI 45460801535 succeeded. Added SQLite inventory registration, transactional stock adjustment, bounded literal search, validation and five independent regression methods including direct SQL readback. New CI pending. Inventory is a local demonstration, not a complete ERP or generated application. No movement ledger, authentication or cross-team adapter yet. Main and parent unchanged. $0 additional expenditure.
