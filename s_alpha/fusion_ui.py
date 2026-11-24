@@ -7,6 +7,7 @@ from pathlib import Path
 from .fusion_gateway import DEFAULT_PORT
 from .fusion_authorization import authorized_dispatch, sign, OPERATIONS
 import sqlite3
+from .fusion_keys import load_key
 
 PAGE="""<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>S Fusion</title><style>
 body{background:#10151d;color:#e6edf3;font:16px system-ui;max-width:800px;margin:auto;padding:20px}button,input,textarea,select{font:inherit;padding:12px;border-radius:8px;margin:5px 0;box-sizing:border-box}button{background:#a7f3d0;color:#10251e;border:0;font-weight:bold}input,textarea,select,pre{background:#192330;color:#e6edf3;border:1px solid #405065;width:100%}pre{white-space:pre-wrap;overflow-wrap:anywhere;padding:12px;box-sizing:border-box}label{display:block;margin-top:12px}button:disabled{opacity:.5}textarea{min-height:90px}</style>
@@ -30,7 +31,7 @@ run.onclick=async()=>{run.disabled=true;select.disabled=true;result.textContent=
 
 def make_server(root,db,port=DEFAULT_PORT):
     token=secrets.token_hex(32)
-    key=secrets.token_bytes(32)
+    key=load_key(str(db)+".key")
     class Handler(BaseHTTPRequestHandler):
         def respond(self,status,data,kind):
             self.send_response(status)
