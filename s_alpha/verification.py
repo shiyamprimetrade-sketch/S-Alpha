@@ -44,6 +44,9 @@ def verify(spec, expected_cases=()):
 
 def verify_internal_source(spec, source, expected_cases=()):
     """Internal trusted compiler output only; never expose as an external API."""
+    expected_cases=list(expected_cases)
+    if len(expected_cases)>64:
+        raise ValueError('too many expected cases')
     ns={}
     exec(compile(source,"<internal synthesis>","exec"),{"__builtins__":{}},ns)
     fn=ns["compute"]
@@ -57,7 +60,7 @@ def verify_internal_source(spec, source, expected_cases=()):
         if not equal(expected,actual):
             failures.append({"args":args,"expected":expected,"actual":actual})
     for args,value in expected_cases:
-        if len(args)!=len(spec["parameters"]) or any(type(x) is not int or abs(x)>1000000 for x in args) or type(value) not in (int,float):
+        if len(args)!=len(spec["parameters"]) or any(type(x) is not int or abs(x)>1000000 for x in args) or type(value) not in (int,float) or abs(value)>10**100 or (type(value) is float and not math.isfinite(value)):
             raise ValueError("invalid expected case")
         actual=outcome(lambda:fn(*args))
         total+=1
