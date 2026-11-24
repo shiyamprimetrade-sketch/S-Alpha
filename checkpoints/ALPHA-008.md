@@ -1,0 +1,2 @@
+# ALPHA-008
+Previous CI 45451790773 passed, including synthetic benchmark assertion (raw 3/6, normalized 6/6). Added SQLite strategy persistence, strict validation improvement gate, exact normalized-text overlap check, operational runner integration and four tests. New CI pending. Validation is caller-supplied and not an independent sealed test set; no generalization guarantee. Promotion is API-only. No neural learning claimed.
