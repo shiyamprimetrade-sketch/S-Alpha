@@ -4,7 +4,9 @@ import json
 import secrets
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from pathlib import Path
-from .fusion_gateway import dispatch, DEFAULT_PORT
+from .fusion_gateway import DEFAULT_PORT
+from .fusion_authorization import authorized_dispatch, sign, OPERATIONS
+import sqlite3
 
 PAGE="""<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>S Fusion</title><style>
 body{background:#10151d;color:#e6edf3;font:16px system-ui;max-width:800px;margin:auto;padding:20px}button,input,textarea,select{font:inherit;padding:12px;border-radius:8px;margin:5px 0;box-sizing:border-box}button{background:#a7f3d0;color:#10251e;border:0;font-weight:bold}input,textarea,select,pre{background:#192330;color:#e6edf3;border:1px solid #405065;width:100%}pre{white-space:pre-wrap;overflow-wrap:anywhere;padding:12px;box-sizing:border-box}label{display:block;margin-top:12px}button:disabled{opacity:.5}textarea{min-height:90px}</style>
@@ -28,6 +30,7 @@ run.onclick=async()=>{run.disabled=true;select.disabled=true;result.textContent=
 
 def make_server(root,db,port=DEFAULT_PORT):
     token=secrets.token_hex(32)
+    key=secrets.token_bytes(32)
     class Handler(BaseHTTPRequestHandler):
         def respond(self,status,data,kind):
             self.send_response(status)
@@ -57,7 +60,13 @@ def make_server(root,db,port=DEFAULT_PORT):
                 task=json.loads(self.rfile.read(length))
             except (ValueError,UnicodeError,RecursionError,OSError):
                 return self.reply(400,{"error":"invalid request"})
-            self.reply(200,dispatch(task,root,db))
+            try:
+                evidence=authorized_dispatch(task,sign(task,key),key,root,db,allowed=OPERATIONS)
+                self.reply(200,dict(evidence["record"]["result"],authorization=evidence))
+            except (ValueError,TypeError,RecursionError):
+                self.reply(400,{"error":"invalid or replayed task"})
+            except (sqlite3.Error,OSError):
+                self.reply(503,{"error":"execution state uncertain; do not retry automatically"})
     return HTTPServer(("127.0.0.1",port),Handler)
 
 def main():
