@@ -21,3 +21,9 @@ def history(db, task_id):
     with closing(sqlite3.connect(db)) as conn, conn:
         conn.execute('CREATE TABLE IF NOT EXISTS evidence (seq INTEGER PRIMARY KEY, task_id TEXT, result TEXT)')
         return [json.loads(row[0]) for row in conn.execute('SELECT result FROM evidence WHERE task_id=? ORDER BY seq',(task_id,))]
+
+def feedback(db, task_id):
+    events = history(db, task_id)
+    return {"attempts": sum(e.get("status") in ("failed", "verified") for e in events),
+            "retries": sum(e.get("status") == "retry" for e in events),
+            "verified": bool(events and events[-1].get("status") == "verified")}
