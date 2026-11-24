@@ -15,7 +15,7 @@ from .learn import journal
 
 def interpret(requirement):
     words = requirement.casefold().split()
-    matches = [kind for kind in ("calculator", "temperature") if kind in words]
+    matches = [kind for kind in ("calculator", "temperature", "counter") if kind in words]
     if len(matches) != 1:
         raise ValueError("requirement must identify exactly one supported template")
     return matches[0]
