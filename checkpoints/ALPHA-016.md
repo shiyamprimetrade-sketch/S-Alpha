@@ -1,0 +1,2 @@
+# ALPHA-016
+CI for ALPHA-014 and 015 passed (45453282342,45453391064). Added learned operator ordering from verified deduplicated observations and a separate synthetic transfer test targeting 3 to 2 attempts. Three tests authored; new CI pending. No neural training or broad generalization claim. Learned ordering may regress on other tasks; promotion gate and wider evaluation remain required. Omega deferred.

@@ -1,0 +1,2 @@
+# ALPHA-013
+Prior CI 45453016193 passed. Added separate arithmetic reference evaluator, deterministic boundary cases, caller-provided expected results, division-by-zero comparison, failure evidence and verified artifact gate. Five tests authored including mutation detection. New CI pending. Reference shares the specification, not an independent natural-language intent oracle; finite cases do not prove correctness. Internal synthesized source only, not a sandbox. CLI/API integration pending.

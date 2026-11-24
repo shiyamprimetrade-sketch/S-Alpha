@@ -1,0 +1,2 @@
+# ALPHA-012
+Created isolated development branch from main. Added declarative arithmetic expression-tree synthesis using Python AST and exclusive artifact creation. Five regression tests authored. Compilation checks syntax only; generated artifacts are not marked functionally verified. No natural-language synthesis or general programming claim. CLI/API integration and independent verification pending.

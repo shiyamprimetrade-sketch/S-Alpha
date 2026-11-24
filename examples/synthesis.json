@@ -1,0 +1,33 @@
+{
+  "version": 2,
+  "id": "mobile-demo",
+  "operation": "synthesize",
+  "spec": {
+    "parameters": [
+      "a",
+      "b"
+    ],
+    "expression": [
+      "mul",
+      [
+        "add",
+        "a",
+        "b"
+      ],
+      [
+        "sub",
+        "a",
+        "b"
+      ]
+    ]
+  },
+  "expected_cases": [
+    [
+      [
+        5,
+        2
+      ],
+      21
+    ]
+  ]
+}

@@ -1,0 +1,2 @@
+# ALPHA-014
+Prior CI 45453145428 passed. Added bounded single-operator mutation search, functional failure evidence, attempt limits and exact verified-source publication. Four tests authored; latest CI pending. Repair is limited to one arithmetic operator change; finite tests may accept coincidentally equivalent candidates. Internal trusted compiler output only. No arbitrary source repair or sandbox claim.

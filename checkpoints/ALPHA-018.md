@@ -1,0 +1,2 @@
+# ALPHA-018
+Prior CI 45453708162 passed. Added dependency-free local browser UI with structured task editor, repair example, knowledge summary, execution evidence and generated source preview. Loopback binding, host validation, per-process token and request size limit. One HTTP integration test authored; CI pending. Browser rendering and Android physical testing not performed. Trusted single-user local prototype, not a production server.

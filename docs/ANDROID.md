@@ -1,0 +1,2 @@
+# Android / Termux
+Clone the alpha-012 development branch into Termux home (not shared storage). Run `bash scripts/install-termux.sh`, then `bash scripts/start-termux.sh`. Open http://127.0.0.1:8766 in the phone browser. Stop with Ctrl+C. Terminal example: `python -m s_alpha execute examples/synthesis.json`. Task IDs are single-use; change the ID for repeat runs. Initial package installation needs internet; runtime is local. No root or APK required. Keep Termux running; Android may suspend background processes. Physical device validation remains pending.

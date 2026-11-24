@@ -1,0 +1,2 @@
+# ALPHA-021
+Prior CI 45454416434 passed. Added mixed held-out synthetic benchmark with conservative no-regression promotion criterion, artifact integrity check, acceptance regression test and release candidate documentation. Benchmark timing is environment-dependent. New CI pending; no measured timing claimed. Adaptive default remains disabled. Physical Android deferred; atomic persistence remains unresolved.
