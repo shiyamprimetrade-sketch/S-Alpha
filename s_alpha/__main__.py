@@ -1,6 +1,8 @@
 import argparse
 import json
 from .runner import run
+from .promotion import promote, audit, active
+from pathlib import Path
 from .learn import history, feedback
 
 def main():
@@ -13,10 +15,18 @@ def main():
     b.add_argument("--out", default="workspace")
     h = sub.add_parser("history")
     h.add_argument("id")
+    t = sub.add_parser("train")
+    t.add_argument("dataset")
+    sub.add_parser("strategy")
     a = p.parse_args()
     try:
         if a.command == "build":
             result = run(dict(version=1, operation="build_software", id=a.id, requirement=a.requirement), a.out, a.db)
+        elif a.command == "train":
+            data = json.loads(Path(a.dataset).read_text(encoding="utf-8"))
+            result = promote(a.db,data["training"],data["validation"])
+        elif a.command == "strategy":
+            result = {"active":active(a.db),"audit":audit(a.db)}
         else:
             result = {"events": history(a.db,a.id), "feedback": feedback(a.db,a.id)}
         print(json.dumps(result, indent=2))
