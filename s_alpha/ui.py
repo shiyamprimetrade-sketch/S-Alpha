@@ -5,7 +5,7 @@ import secrets
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from pathlib import Path
 from .pipeline import execute
-from .synthesis import synthesize
+import hashlib
 
 PAGE = """<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>S-Alpha</title><style>
 body{background:#10151d;color:#e6edf3;font:16px system-ui;margin:0 auto;padding:24px;max-width:850px}textarea,pre{box-sizing:border-box;width:100%;background:#192330;color:#e6edf3;border:1px solid #405065;border-radius:8px;padding:12px;white-space:pre-wrap;overflow-wrap:anywhere}button{background:#a7f3d0;color:#10251e;border:0;border-radius:8px;padding:12px;margin:4px;font-weight:bold}label{display:block;margin:12px 0}textarea{min-height:220px}h2{font-size:18px}</style>
@@ -46,14 +46,16 @@ def make_server(root,db,port=8766):
                 if not 0<length<=65536:
                     raise ValueError()
                 task=json.loads(self.rfile.read(length))
-            except (ValueError,UnicodeError):
+            except (ValueError,UnicodeError,RecursionError):
                 return self.json_response(400,{"error":"invalid request"})
             result=execute(task,root,db)
             if result.get("status")=="verified" and "artifact" in result:
-                spec=task["spec"]
-                if task["operation"]=="repair":
-                    spec=dict(spec,expression=result["attempts"][-1]["expression"])
-                result["source"]=synthesize(spec)
+                try:
+                    data=(Path(root)/task["id"]/"compute.py").read_bytes()
+                    if hashlib.sha256(data).hexdigest()==result["artifact"]["sha256"]:
+                        result["source"]=data.decode("utf-8")
+                except (OSError,UnicodeError):
+                    pass
             self.json_response(200,result)
     return HTTPServer(("127.0.0.1",port),Handler)
 
