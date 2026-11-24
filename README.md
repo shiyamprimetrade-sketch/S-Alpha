@@ -1,3 +1,22 @@
+# S-Alpha — integrated v0.2 prototype baseline
+
+S-Create, S-Learn and S-Universal provide bounded arithmetic synthesis, verification, single-operator repair, persistent knowledge and local orchestration. Python 3.11+; no third-party runtime dependencies.
+
+## Quick start
+```sh
+python -m unittest discover -s tests -v
+python -m s_alpha.doctor
+python -m benchmarks.acceptance
+python -m s_alpha execute examples/synthesis.json
+python -m s_alpha.ui
+```
+Open http://127.0.0.1:8766. Task IDs are single-use. Android: see [Termux guide](docs/ANDROID.md).
+
+## Evidence and scope
+[Release candidate record](docs/RELEASE-v0.2.0.md) | [Security boundary](docs/SECURITY.md) | [Protocol v2](protocols/S-PROTOCOL-002.md) | [Final checkpoint](checkpoints/ALPHA-022.md)
+
+PR #2 merged after Ubuntu and Windows CI passed on its head. Physical Android acceptance deferred. Adaptive repair is experimental and disabled by default. Not a general autonomous programmer or production server. No license granted by this README; public repository is not confidential.
+
 # S-Alpha
 Local experimental prototypes of S-Create, S-Learn and S-Universal. Python 3.11+, standard library only. Not a general autonomous AI.
 
