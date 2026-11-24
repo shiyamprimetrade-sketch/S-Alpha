@@ -1,0 +1,34 @@
+{
+  "training": [
+    [
+      "calculator!",
+      "calculator"
+    ],
+    [
+      "counter?",
+      "counter"
+    ],
+    [
+      "chess",
+      null
+    ]
+  ],
+  "validation": [
+    [
+      "addition.",
+      "addition"
+    ],
+    [
+      "temperature!",
+      "temperature"
+    ],
+    [
+      "calculator counter",
+      null
+    ],
+    [
+      "unknown",
+      null
+    ]
+  ]
+}
