@@ -1,0 +1,2 @@
+# FUSION-ALPHA-011
+Previous Alpha CI 45463307054 and cross-team CI 45463307048 passed. Added private local persistent signing key, signed claim inspection, callable v3 bridge and two restart regression methods. New CI pending. Existing ephemeral evidence cannot be recovered; Windows ACL and hostile directory protection not established. Keep DB and key private; no automatic key replacement or uncertain replay. Bridge not yet invoked by Omega. Recovery verifies completed records only; interrupted effects still require manual reconciliation. Main and parent unchanged. $0.
