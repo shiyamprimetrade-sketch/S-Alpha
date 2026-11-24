@@ -1,6 +1,7 @@
 import argparse
 import json
 from .runner import run
+from .pipeline import execute
 from .promotion import promote, audit, active
 from pathlib import Path
 from .learn import history, feedback
@@ -18,10 +19,17 @@ def main():
     t = sub.add_parser("train")
     t.add_argument("dataset")
     sub.add_parser("strategy")
+    e = sub.add_parser("execute")
+    e.add_argument("task")
+    e.add_argument("--out", default="workspace")
     a = p.parse_args()
     try:
         if a.command == "build":
             result = run(dict(version=1, operation="build_software", id=a.id, requirement=a.requirement), a.out, a.db)
+        elif a.command == "execute":
+            result = execute(json.loads(Path(a.task).read_text(encoding="utf-8")), a.out, a.db)
+            print(json.dumps(result, indent=2))
+            return int(result.get("status") == "failed")
         elif a.command == "train":
             data = json.loads(Path(a.dataset).read_text(encoding="utf-8"))
             result = promote(a.db,data["training"],data["validation"])
