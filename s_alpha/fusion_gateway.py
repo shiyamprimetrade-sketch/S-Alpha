@@ -37,7 +37,7 @@ def dispatch(task,root,db):
                 inv.register(**args)
                 data={"registered":True}
             elif op=="inventory_adjust":
-                data={"quantity":inv.adjust(**args)}
+                data={"quantity":inv.adjust(request_id=ident,**args)}
             else:
                 data={"products":inv.search(**args)}
         elif op=="repair_demo":
