@@ -40,6 +40,10 @@ def cases(n):
 
 def verify(spec, expected_cases=()):
     source=synthesize(spec)
+    return verify_internal_source(spec,source,expected_cases)
+
+def verify_internal_source(spec, source, expected_cases=()):
+    """Internal trusted compiler output only; never expose as an external API."""
     ns={}
     exec(compile(source,"<internal synthesis>","exec"),{"__builtins__":{}},ns)
     fn=ns["compute"]
@@ -62,7 +66,8 @@ def verify(spec, expected_cases=()):
     return {"status":"failed" if failures else "verified","total":total,"passed":total-len(failures),"failures":failures}
 
 def build_verified(spec,root,expected_cases=()):
-    result=verify(spec,expected_cases)
+    source=synthesize(spec)
+    result=verify_internal_source(spec,source,expected_cases)
     if result["status"]=="verified":
-        result["artifact"]=create(root,"compute.py",synthesize(spec))
+        result["artifact"]=create(root,"compute.py",source)
     return result
