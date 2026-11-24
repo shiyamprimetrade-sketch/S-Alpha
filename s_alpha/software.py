@@ -41,6 +41,9 @@ def build(kind, root):
     if kind not in TEMPLATES:
         raise ValueError("unsupported template")
     source = TEMPLATES[kind]
+    if kind == 'addition':
+        from .repair import repair_addition
+        source = repair_addition(source)['source'] + ADDITION_TESTS
     ast.parse(source)
     # Execute only the built-in source, not a mutable workspace file.
     run = subprocess.run([sys.executable, "-I", "-c", source],
@@ -58,5 +61,14 @@ if __name__ == '__main__':
     assert count_words('one two') == 2
     assert count_words('') == 0
     assert count_words('  one  ') == 1
+    print('PASS')
+"""
+
+TEMPLATES["addition"] = "def add(a,b): return a - b"
+ADDITION_TESTS = """
+if __name__ == '__main__':
+    assert add(2,3) == 5
+    assert add(-4,1) == -3
+    assert add(0,0) == 0
     print('PASS')
 """
