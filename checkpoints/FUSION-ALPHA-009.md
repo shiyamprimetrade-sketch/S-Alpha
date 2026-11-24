@@ -1,0 +1,2 @@
+# FUSION-ALPHA-009
+Cross-team workflow 45463072357 passed at Alpha 76b514282756e4216a7b0bc9eb4cf87c4165180b with pinned Omega 27d6fc27a9ced1bb31bd8375bce316f1571b1065. Scope v2 arithmetic and both regression suites. Added candidate local authenticated v3 adapter, operation allowlist, durable claims, signed evidence and two tests. New CI pending. Omega wiring, UI enforcement, recovery reconciliation and independent v3 verification remain open. Parent and main unchanged; $0 additional expenditure.
