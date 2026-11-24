@@ -1,0 +1,2 @@
+# ALPHA-020
+CI 45453860847 and 45454027009 passed. Added compiler and verification resource limits, nonfinite rejection, malformed ID handling, symlink rejection and hash-checked source preview. Five regression tests authored (symlink may skip on Windows). New CI pending. Security boundary documented. Atomic persistence, adaptive promotion and broad performance benchmarks remain open; physical Android deferred by founder.
