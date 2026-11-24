@@ -6,10 +6,17 @@ from .create import create
 OPS = {"add":ast.Add,"sub":ast.Sub,"mul":ast.Mult,"div":ast.Div}
 
 def synthesize(spec):
+    if not isinstance(spec,dict):
+        raise ValueError('invalid specification')
     params = spec["parameters"]
-    if not isinstance(params,list) or not 1 <= len(params) <= 8 or any(not isinstance(p,str) or not p.isascii() or not p.isidentifier() or keyword.iskeyword(p) for p in params) or len(set(params)) != len(params):
+    if not isinstance(params,list) or not 1 <= len(params) <= 8 or any(not isinstance(p,str) or len(p)>64 or not p.isascii() or not p.isidentifier() or keyword.iskeyword(p) for p in params) or len(set(params)) != len(params):
         raise ValueError("invalid parameters")
+    count=0
     def node(expr, depth=0):
+        nonlocal count
+        count+=1
+        if count>127:
+            raise ValueError('expression too large')
         if depth > 12:
             raise ValueError("expression too deep")
         if type(expr) is int and abs(expr) <= 1000000:
