@@ -1,0 +1,2 @@
+# ALPHA-015
+Previous CI 45453282342 was in progress at inspection. Added persistent repair observations, successful and failed attempt evidence, deterministic content fingerprints, deduplication and summary queries. Three regression tests authored. Latest CI pending. Knowledge is stored but not yet used to prioritize repair candidates; filesystem and database persistence remain non-atomic. No neural learning claim.
