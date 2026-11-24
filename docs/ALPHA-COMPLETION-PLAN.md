@@ -1,0 +1,4 @@
+# Alpha completion plan
+Founder directive: finish Alpha before activating Omega; prioritize quality over rushing. Preserve v0.1.0 baseline and zero additional budget. Omega coordination deferred; use local interface contracts.
+Proposed milestones: 012 compositional synthesis; 013 independent functional tests; 014 debugging and correction; 015 persistent knowledge; 016 adaptive evaluation; 017 unified runtime; 018 GUI; 019 Android compatibility; 020 security/reliability/performance; 021 acceptance and documentation; 022 release/handover.
+Acceptance: reproducible functional demonstrations, cross-platform tests, documented limitations, installation instructions, evidence and founder review. Milestone numbers are planning estimates, not guarantees of general intelligence. Physical Android acceptance may require founder participation. No unattended execution claimed.
