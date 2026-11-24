@@ -1,0 +1,2 @@
+# ALPHA-011
+CI 45452421787 passed on Ubuntu and Windows. PR #1 merged at fe5be537211a16f790ba4e6bd58440d3c34ffc44. Stable experimental source baseline available on main. No GitHub release/tag created. Founder Android acceptance: clone main, run unittest suite, train demo dataset, build addition, inspect history and execute generated addition.py. Physical device validation, Omega agreement, upstream adapters, independent benchmark and atomic artifact/database persistence remain open. Additional budget $0.
