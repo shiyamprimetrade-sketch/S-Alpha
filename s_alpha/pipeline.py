@@ -10,7 +10,7 @@ from .learn import journal
 def execute(task,root,db):
     task_id=task.get("id") if isinstance(task,dict) else None
     def failure(code):
-        return {"version":2,"id":task_id,"status":"failed","error":{"code":code}}
+        return {"version":2,"id":task_id if isinstance(task_id,str) else None,"status":"failed","error":{"code":code}}
     if not isinstance(task,dict) or type(task.get("version")) is not int or task["version"]!=2 or not isinstance(task_id,str) or not task_id or len(task_id)>64 or not task_id.isascii() or not all(c.isalnum() or c in "_-" for c in task_id):
         return failure("INVALID_TASK")
     op=task.get("operation")
@@ -31,6 +31,8 @@ def execute(task,root,db):
             except sqlite3.IntegrityError:
                 return failure("DUPLICATE_TASK")
         out=Path(root)/task_id
+        if out.is_symlink():
+            return failure("UNSAFE_WORKSPACE")
         if op=="repair":
             result=learn_repair(db,spec,task["candidate"],out,expected,task.get("max_attempts",32))
         else:
@@ -38,7 +40,7 @@ def execute(task,root,db):
         result.update(version=2,id=task_id)
         journal(db,task_id,result)
         return result
-    except (ValueError,KeyError,TypeError,OverflowError):
+    except (ValueError,KeyError,TypeError,OverflowError,RecursionError):
         return failure("INVALID_SPEC")
     except sqlite3.Error:
         return failure("STORAGE_ERROR")
