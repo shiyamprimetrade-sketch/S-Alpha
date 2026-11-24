@@ -30,3 +30,6 @@ jobs:
         working-directory: omega
       - run: python alpha_acceptance.py ../alpha
         working-directory: omega
+
+      - run: python integration/fusion_v3_acceptance.py ../omega
+        working-directory: alpha
