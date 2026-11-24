@@ -1,27 +1,23 @@
 # S-Alpha
+Local experimental prototypes of S-Create, S-Learn and S-Universal. Python 3.11+, standard library only. Not a general autonomous AI.
 
-Project S engineering workspace for S-Create, S-Learn and S-Universal.
-
-## Status
-Experimental prototypes; not a production autonomous AI. Public repository: do not publish secrets or unpublished patent-sensitive research.
-
-## Architecture
-- `s_alpha/create.py`: bounded artifact creation.
-- `s_alpha/learn.py`: persistent evaluation records.
-- `s_alpha/universal.py`: versioned task routing.
-- `protocols/`: shared interface proposal.
-- `tests/`: regression tests.
-- `docs/`, `research/`, `experiments/`, `benchmarks/`, `checkpoints/`: engineering evidence.
-
-## Run
-Python 3.11+; no third-party runtime dependencies.
-
+## Quick start
+From repository root:
 ```sh
+python -m s_alpha train benchmarks/training_demo.json
+python -m s_alpha strategy
+python -m s_alpha build "Build addition!" --id demo001
+python -m s_alpha history demo001
 python -m unittest discover -s tests -v
 ```
+Use a fresh task ID and output directory for each build of the same template. The default database is alpha.sqlite3; specify --db before the command to change it.
 
-## Existing foundations
-S, S-Eye, S-Hand and S_Ml remain separate upstream projects. Integration adapters are pending source audit.
+## Components
+- S-Create: calculator, temperature, counter, addition templates; controlled addition repair and self-tests.
+- S-Learn: SQLite execution evidence, strategy selection and promotion audit.
+- S-Universal: versioned routing, bounded retries, CLI task claims.
+- protocols/: proposed shared interface; Omega approval pending.
+- checkpoints/: engineering record; benchmarks/: synthetic evaluation.
 
-## Governance
-Founder-approved public monorepo; zero additional budget. No license granted by this README. Contributions and releases require review.
+## Limitations
+No arbitrary source execution, neural training, general software generation, atomic filesystem/database transaction or upstream adapters. Single-use IDs remain claimed after failure. Physical Android validation pending. Public repository: no secrets or unpublished patent-sensitive material. No license granted by this README.
