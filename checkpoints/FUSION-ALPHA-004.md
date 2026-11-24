@@ -1,0 +1,2 @@
+# FUSION-ALPHA-004
+Inventory CI 45461040796 was running at initial inspection. Added separate fixed acceptance contracts, bounded operator correction for calculator addition and inventory adjustment models, deduplicated SQLite evidence and four tests. No arbitrary source execution or mutation of deployed engines. Website repair is not implemented. Fixed examples are not proof of general correctness. New CI pending. Main and parent untouched; $0 additional expenditure.

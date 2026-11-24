@@ -1,0 +1,2 @@
+# FUSION-ALPHA-005
+Repair CI 45461202286 passed. Inspected pinned Omega api.py, transactional.py and alpha_acceptance.py. Added local v3 dispatcher and v2 passthrough, two test methods, provisional protocol and port constant 8767. No authenticated v3 interoperability or actual listener change yet. Inventory replay protection pending. New CI pending. Main and parent untouched. $0 additional expenditure.

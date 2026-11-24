@@ -1,0 +1,35 @@
+name: Fusion cross-team acceptance
+on:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  interoperability:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: alpha
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          repository: shiyamprimetrade-sketch/S-Omega
+          ref: 27d6fc27a9ced1bb31bd8375bce316f1571b1065
+          path: omega
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m unittest discover -s tests -v
+        working-directory: alpha
+      - run: python -m unittest discover -s tests -v
+        working-directory: omega
+      - run: python fusion_acceptance.py ../alpha
+        working-directory: omega
+      - run: python alpha_acceptance.py ../alpha
+        working-directory: omega
+
+      - run: python integration/fusion_v3_acceptance.py ../omega
+        working-directory: alpha
