@@ -50,3 +50,13 @@ def build(kind, root):
     artifact = create(root, kind + ".py", source)
     return {"kind": kind, "status": "verified", "artifact": artifact,
             "verification": "built-in source self-test"}
+
+TEMPLATES["counter"] = """def count_words(text):
+    return len(text.split())
+
+if __name__ == '__main__':
+    assert count_words('one two') == 2
+    assert count_words('') == 0
+    assert count_words('  one  ') == 1
+    print('PASS')
+"""
